@@ -32,7 +32,7 @@ app.use(loggerExpress);
 app.get('/', (req, res) => {
   if (!isAlive)
     res.status(503).send(
-      `Backend version:${version},Response:503,Backend is stopped`
+      `Backend version:${version},Response:503, Message: Backend is stopped`
     );
   else {
     // var protocol = 'http'
