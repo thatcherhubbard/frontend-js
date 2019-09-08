@@ -11,6 +11,7 @@
   "scripts": {
     "start": "node server.js",
     "sonar": "node sonar/sonar.js",
+    "version": "echo $npm_package_version",
     "test": "jest"
   },
   "dependencies": {
