@@ -12,7 +12,6 @@ const logger = pino({
 const loggerExpress = pinoExpress(logger);
 var PropertiesReader = require('properties-reader');
 var isAlive = true
-
 // Constants
 const PORT = process.env.PORT || 8080;
 const HOST = '0.0.0.0';
