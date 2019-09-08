@@ -1,0 +1,36 @@
+{
+  "name": "frontend-js",
+  "version": "1.0.0",
+  "description": "Demo App - Node.js Frontend Service",
+  "author": "Voravit L <voravit@redhat.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/ocp-demo/frontend-js.git"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "sonar": "node sonar/sonar.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "eslint": "^6.1.0",
+    "express": "^4.16.1",
+    "express-pino-logger": "^4.0.0",
+    "pino": "^5.13.2",
+    "properties-reader": "0.3.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "sonarqube-scanner": "^2.5.0",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/sonar/"
+    ]
+  }
+}
