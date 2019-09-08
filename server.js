@@ -31,51 +31,28 @@ app.use(loggerExpress);
 app.get('/', (req, res) => {
   if (!isAlive)
     res.status(503).send(
-      `Backend version:${version},Response:503, Message: Backend is stopped`
+      `Frontend version:${version}, Response:503, Message: Backend is stopped`
     );
   else {
-    // var protocol = 'http'
-    // if (BACKEND_URL.startsWith('https')) protocol = 'https';
-    //   var https = require(protocol);
-    //   var client = https.get(BACKEND_URL, (resp) => {
-    //   logger.info(`${BACKEND_URL} return ${resp.statusCode}`);
-    //   res.status(resp.statusCode).send(
-    //     `Frontend version:${version},Response:${resp.statusCode},Host:${hostname} ==> [ Backend ]`
-    //   );
-    // });
-    var protocol = 'http'
+    var protocol = 'http';
+    var body = '';
     if (BACKEND_URL.startsWith('https')) protocol = 'https';
     const https = require(protocol);
-    const client = https.get(BACKEND_URL, (resp) => {
-      logger.info(`${BACKEND_URL} return ${resp.statusCode}`);
-      var body='';
-      resp.on('data', function (chunk) {
-        body += chunk;
-        
-      });
-      res.status(resp.statusCode).send(
-        `Frontend version: ${version} => [Backend: ${BACKEND_URL}, Response: ${resp.statusCode}, Body: ${body}]`
-      );
-      res.on('end', function() {
-        logger.info(`End`);
-      });
-    });
-    // var protocol = 'http'
-    // if (BACKEND_URL.startsWith('https')) protocol = 'https';
-    // const https = require(protocol);
-    // const client = https.get(BACKEND_URL, (resp) => {
-    //   logger.info(`${BACKEND_URL} return ${resp.statusCode}`);
-    //   resp.on('data', function (chunk) {
-    //     logger.info(`Process for response`);
-    //     res.status(resp.statusCode).send(
-    //       `Frontend version:${version} Response:${resp.statusCode} => [${chunk}]`
-    //     );
-    //   });
-    // });
+    const callback = function(response) {
+        response.on('data', function (chunk) {
+          body += chunk;
+        });    
+        response.on('end', function () {
+          res.status(response.statusCode).send(
+                `Frontend version: ${version} => [Backend: ${BACKEND_URL}, Response: ${response.statusCode}, Body: ${body}]`
+              );
+        });
+    }
+    var client = https.request(BACKEND_URL, callback);
     client.on('error', error => {
       logger.error(error);
       res.status(503).send(
-        `Backend version:${version},Response:503,Host:${hostname},${error}`
+        `Frontend version:${version}, Response:503,Host:${hostname}, Message: ${error}`
       );
     });
     client.end();
@@ -85,14 +62,14 @@ app.get('/', (req, res) => {
 app.get('/stop', (req, res) => {
   isAlive = false;
   res.status(200).send(
-    `Frontend version:${version} Response:200 Message:set ${hostname} is stopped`
+    `Frontend version:${version}, Response:200, Message:set ${hostname} is stopped`
   );
   logger.info('App is stopped working');
 });
 
 app.get('/version', (req, res) => {
   res.status(200).send(
-    `Frontend version:${version} Response:200 Meessage:check version`
+    `Frontend version:${version}, Response:200, Meessage:check version`
   );
   logger.info('App is stopped working');
 });
@@ -100,7 +77,7 @@ app.get('/version', (req, res) => {
 app.get('/start', (req, res) => {
   isAlive = true;
   res.status(200).send(
-    `Frontend version:${version} Response:200 Message:set ${hostname} is started`
+    `Frontend version:${version}, Response:200, Message:set ${hostname} is started`
   );
   logger.info('App is started');
 });
@@ -116,14 +93,14 @@ app.get('/status', (req, res) => {
     logger.info('App status = Ready');
   }
   res.status(status).send(
-    `Frontend version:${version} Response:200 Message:${message}`
+    `Frontend version:${version}, Response:200, Message:${message}`
   );
 });
 
 app.get('/version', (req, res) => {
   logger.info("Check version");
   res.status(200).send(
-    `Backend version:${version},Response:200`
+    `Backend version:${version}, Response:200`
   );
 });
 
