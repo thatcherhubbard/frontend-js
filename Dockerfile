@@ -17,7 +17,6 @@ COPY . .
 USER 1001
 EXPOSE 8080
 CMD [ "node", "server.js" ]
-
 # docker build -t voravitl/frontend-js:latest .
 # docker tag  voravitl/frontend-js:latest quay.io/voravitl/frontend-js:latest
 # docker push quay.io/voravitl/frontend-js:latest
