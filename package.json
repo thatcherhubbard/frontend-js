@@ -18,13 +18,14 @@
     "eslint": "^6.8.0",
     "express": "^4.16.1",
     "express-pino-logger": "^4.0.0",
+    "hpropagate": "0.0.7",
     "pino": "^5.13.2",
     "properties-reader": "0.3.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
     "jest": "^24.9.0",
-    "sonarqube-scanner": "^2.5.0",
+    "sonarqube-scanner": "^2.8.0",
     "supertest": "^4.0.2"
   },
   "jest": {
