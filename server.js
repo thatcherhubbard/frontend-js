@@ -33,17 +33,6 @@ app.use(loggerExpress);
 
 // Main Function
 app.get('/', (req, res) => {
-  // const requestid = req.headers['x-request-id'];
-  // const traceid = req.headers['x-b3-traceid'];
-  // const spanid= req.headers['x-b3-spanid'];
-  // const parentspanid = req.headers['x-b3-parentspanid'];
-  // const sampled = req.headers['x-b3-sampled'];
-  // const flags = req.headers['x-b3-flags'];
-  // const context = req.headers['x-ot-span-context'];
-  // logger.info('x-request-id: '+requestid);
-  // logger.info('x-b3-traceid: '+traceid);
-  // logger.info('x-b3-spanid: '+spanid);
-  // logger.info('x-b3-parentspanid: '+parentspanid);
   if (!isAlive)
     res.status(503).send(
       `Frontend version:${version}, Response:503, Message: Backend is stopped`
