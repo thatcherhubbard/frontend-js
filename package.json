@@ -15,11 +15,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@cloudnative/health-connect": "^2.1.0",
     "eslint": "^6.8.0",
     "express": "^4.16.1",
     "express-pino-logger": "^4.0.0",
     "hpropagate": "0.0.7",
     "pino": "^5.13.2",
+    "prom-client": "^13.0.0",
     "properties-reader": "0.3.1",
     "uuid": "^3.3.2"
   },
