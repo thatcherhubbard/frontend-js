@@ -38,9 +38,19 @@ register.setDefaultLabels({
 // Enable the collection of default metrics
 prom.collectDefaultMetrics({ register })
 
+const httpRequestDurationMicroseconds = new prom.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'Duration of HTTP requests in microseconds',
+  labelNames: ['method', 'route', 'code'],
+  buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10]
+})
+// Register the histogram
+register.registerMetric(httpRequestDurationMicroseconds)
 
 logger.info('BACKEND URL: ' + BACKEND_URL);
-// App
+
+
+//App
 const app = express();
 // set log
 app.use(loggerExpress);
@@ -120,31 +130,35 @@ app.get('/ready', (req, res) => {
 
 app.get('/health/live', (req, res) => {
   var status = 200;
-  var message = 'Still Alive';
   if (isAlive == false) {
     status = 503;
-    message = 'Unavailable';
-    logger.info('App status = Not Live');
-  } else {
-    logger.info('App status = Live');
-  }
+  } 
+  logger.info(`Ready=${isReady} Live=${isAlive}`);
   res.status(status).send(
-    `Frontend version:${version}, Response:${status}, Message:${message}`
+    `Frontend version:${version}, Response:${status}, Message:Ready=${isReady} Live=${isAlive}`
   );
 });
 
 app.get('/health/ready', (req, res) => {
   var status = 200;
-  var message = 'Ready';
   if (isReady == false) {
     status = 503;
-    message = 'Not Ready';
-    logger.info('App status = Not Ready');
-  } else {
-    logger.info('App status = Ready');
-  }
+  } 
+  logger.info(`Ready=${isReady} Live=${isAlive}`);
   res.status(status).send(
-    `Frontend version:${version}, Response:${status}, Message:${message}`
+    `Frontend version:${version}, Response:${status}, Message:Ready=${isReady} Live=${isAlive}`
+  );
+});
+
+app.get('/health', (req, res) => {
+  var status = 200;
+  if (isReady == false || isAlive == false) {
+    status = 503;
+    
+  }
+  logger.info(`Ready=${isReady} Live=${isAlive}`);
+  res.status(status).send(
+    `Frontend version:${version}, Response:${status}, Message: Ready=${isReady} Live=${isAlive}`
   );
 });
 
