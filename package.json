@@ -16,18 +16,17 @@
   },
   "dependencies": {
     "@cloudnative/health-connect": "^2.1.0",
-    "eslint": "^6.8.0",
-    "express": "^4.16.1",
+    "eslint": "^8.1.0",
+    "express": "^4.17.1",
     "express-pino-logger": "^4.0.0",
-    "hpropagate": "0.0.7",
+    "hpropagate": "1.0.1",
     "pino": "^5.13.2",
-    "prom-client": "^13.0.0",
-    "properties-reader": "0.3.1",
-    "uuid": "^3.3.2"
+    "properties-reader": "^2.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "jest": "^24.9.0",
-    "sonarqube-scanner": "^2.8.0",
+    "jest": "^27.3.1",
+    "sonarqube-scanner": "^2.8.1",
     "supertest": "^4.0.2"
   },
   "jest": {

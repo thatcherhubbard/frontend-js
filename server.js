@@ -22,34 +22,10 @@ const HOST = '0.0.0.0';
 const hostname = os.hostname();
 const config = process.env.CONFIG;
 var properties;
-const version = PropertiesReader('config/version.ini').get('main.version');
+//const version = PropertiesReader('config/version.ini').get('main.version');
+const version = process.env.VERSION || 'v1'
 const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${PORT}/version`
-
-// const health = require('@cloudnative/health-connect');
-// let healthcheck = new health.HealthChecker();
-
-var prom = require('prom-client');
-//prom.collectDefaultMetrics();
-const register = new prom.Registry()
-// Add a default label which is added to all metrics
-register.setDefaultLabels({
-  app: 'frontend'
-})
-// Enable the collection of default metrics
-prom.collectDefaultMetrics({ register })
-
-const httpRequestDurationMicroseconds = new prom.Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'Duration of HTTP requests in microseconds',
-  labelNames: ['method', 'route', 'code'],
-  buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10]
-})
-// Register the histogram
-register.registerMetric(httpRequestDurationMicroseconds)
-
 logger.info('BACKEND URL: ' + BACKEND_URL);
-
-
 //App
 const app = express();
 // set log
@@ -87,12 +63,12 @@ app.get('/', (req, res) => {
   }
 });
 
-app.get('/metrics', (req, res) => {
+// app.get('/metrics', (req, res) => {
 
-  res.set('Content-Type', prom.register.contentType);
-  res.status(200).send(prom.register.metrics());
-  logger.info('Get Application metrics');
-});
+//   res.set('Content-Type', prom.register.contentType);
+//   res.status(200).send(prom.register.metrics());
+//   logger.info('Get Application metrics');
+// });
 
 
 app.get('/stop', (req, res) => {
