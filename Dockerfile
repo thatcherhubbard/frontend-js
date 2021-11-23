@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/ubi8/nodejs-14:latest
+#FROM registry.access.redhat.com/ubi8/nodejs-14:latest
+FROM registry.access.redhat.com/ubi8/nodejs-16-minimal:latest
 USER root
 # Create app directory
 WORKDIR /usr/src/app
