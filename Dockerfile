@@ -10,7 +10,7 @@ COPY server.js $HOME
 
 
 # Second stage copies the application to the minimal image
-FROM registry.redhat.io/ubi9/nodejs-14-minimal
+FROM registry.redhat.io/ubi8/nodejs-14-minimal
 
 # Copy the application source and build artifacts from the builder image to this one
 COPY --from=builder $HOME $HOME
