@@ -1,5 +1,5 @@
 # First stage builds the application
-FROM registry.redhat.io/ubi9/nodejs-14 as builder
+FROM registry.redhat.io/ubi8/nodejs-14 as builder
 
 # Add application sources
 COPY pack*.json $HOME
