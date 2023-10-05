@@ -32,6 +32,23 @@ const app = express();
 // set log
 app.use(loggerExpress);
 
+const promBundle = require("express-prom-bundle");
+
+// Add the options to the prometheus middleware most option are for http_request_duration_seconds histogram metric
+const metricsMiddleware = promBundle({
+    includeMethod: true, 
+    includePath: true, 
+    includeStatusCode: true, 
+    includeUp: true,
+    customLabels: {project_name: 'resilience-ex', project_type: 'openshift-workshop'},
+    promClient: {
+        collectDefaultMetrics: {
+        }
+      }
+});
+// add the prometheus middleware to all routes
+app.use(metricsMiddleware)
+
 // Main Function
 app.get('/', (req, res) => {
   if (!isAlive || !isReady)
@@ -63,14 +80,6 @@ app.get('/', (req, res) => {
     client.end();
   }
 });
-
-// app.get('/metrics', (req, res) => {
-
-//   res.set('Content-Type', prom.register.contentType);
-//   res.status(200).send(prom.register.metrics());
-//   logger.info('Get Application metrics');
-// });
-
 
 app.get('/stop', (req, res) => {
   isAlive = false;
